@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const axios = require('axios');
+const Dev = require('./models/Dev');
 
 const routes = Router();
 
@@ -14,9 +15,19 @@ routes.post('/devs', async (request, response) => { //quando eu acessar localhos
     //o await obriga a esperar a resposta antes de passar para a próxima linha
     const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);//quando eu coloco crase ao inves de aspas simples eu consigo colocar uma variavel no meio
 
-    console.log(apiResponse.data);
+    const {name = login, avatar_url, bio } = apiResponse.data;
 
-    return response.json({ message: 'Hello Omnistack' });
+    const techsArray = techs.split(',').map(tech => tech.trim());
+
+    const dev = await Dev.create({
+        github_username,
+        name,
+        avatar_url,
+        bio,
+        techs: techsArray,
+    })
+
+    return response.json(dev);
 });
 
 module.exports = routes;
