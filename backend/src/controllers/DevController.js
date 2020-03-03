@@ -1,7 +1,14 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
+const parseStringAsArray = require('../utils/parseStringAsArray');
 
 module.exports = {
+  async index(request, response) {
+    const devs = await Dev.find();
+
+    return response.json(devs);
+  }
+
   async store(request, response) { //quando eu acessar localhost:3333 eu caio em /users
     //quando eu acesso alguma rota eu to fazendo uma requisição (request). Todas as informações para criar um registro vão estar dentro ddo request
     //o response é como a gente vai devolver uma resposta para o nosso cliente
@@ -16,7 +23,7 @@ module.exports = {
 
     const {name = login, avatar_url, bio } = apiResponse.data;
 
-    const techsArray = techs.split(',').map(tech => tech.trim());
+    const techsArray = parseStringAsArray(techs);
 
     const location = {
         type: 'Point',
