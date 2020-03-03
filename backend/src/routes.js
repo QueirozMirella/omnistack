@@ -11,7 +11,7 @@ routes.post('/devs', async (request, response) => { //quando eu acessar localhos
     //o response é como a gente vai devolver uma resposta para o nosso cliente
     //return response.send('Hello World'); //o send envia um texto como resposta
     //nós vamos usar o json, então nao vamos usar o send pra enviar resposta
-    const { github_username } = request.body;
+    const { github_username, techs, latitude, longitude } = request.body;
     //o await obriga a esperar a resposta antes de passar para a próxima linha
     const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);//quando eu coloco crase ao inves de aspas simples eu consigo colocar uma variavel no meio
 
@@ -19,12 +19,18 @@ routes.post('/devs', async (request, response) => { //quando eu acessar localhos
 
     const techsArray = techs.split(',').map(tech => tech.trim());
 
+    const location = {
+        type: 'Point',
+        coordinates: [longitude, latitude], 
+    }
+
     const dev = await Dev.create({
         github_username,
         name,
         avatar_url,
         bio,
         techs: techsArray,
+        location
     })
 
     return response.json(dev);
