@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import './global.css';
 
 function App() {
-  const [counter, setCounter] = useState(0);
-
-  function incrementCounter(){
-    counter++;
-  }
-
+  
   return (
-    <>
-      <h1>Contador: {counter}</h1>
-      <button onClick={incrementCounter}>Incrementar</button>
-    </>
+    <div id="app">
+      <aside>
+
+      </aside>
+      <main>
+
+      </main>
+    </div>
   );
 }
 
