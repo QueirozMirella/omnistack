@@ -1,15 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-import Header from './Header';
+import React, { useState } from 'react';
 
 function App() {
+  const [counter, setCounter] = useState(0);
+
+  function incrementCounter(){
+    counter++;
+  }
+
   return (
     <>
-      <Header title="title 1" />
-      <Header title="title 2" />
-      <Header title="title 3" />
+      <h1>Contador: {counter}</h1>
+      <button onClick={incrementCounter}>Incrementar</button>
     </>
   );
 }
@@ -17,5 +18,5 @@ function App() {
 export default App;
 
 //componente: Bloco isolado de HTML, CSS e JS, o qual não interfere no restante da aplicação.
-//estado:
+//estado: informações mantidas pelo componente (lembrar de imutabilidade)
 //propriedade: Informações que um componente pai passa para o componente filho
